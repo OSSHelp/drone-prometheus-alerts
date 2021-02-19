@@ -61,6 +61,12 @@ For internal purposes and OSSHelp customers we have an alternative image url:
 
 There is no difference between the DockerHub image and the oss.help/drone image.
 
+## FAQ
+
+### Why it fails with alerts without tests?
+
+Using alerting rules without corresponding testing is considered a very bad idea. One day you can break your alerting without even noticing it. The consequences you can imagine by yourself. So, read the [official docs on promtool](https://prometheus.io/docs/prometheus/latest/configuration/unit_testing_rules/) and add tests for your alerting rules.
+
 ## Links
 
 - [Prometheus documentation](https://prometheus.io/docs/prometheus/latest/configuration/unit_testing_rules/)
