@@ -10,10 +10,14 @@ Docker image for testing alerting and recording rules in Prometheus.
 
 | Param | Default | Description |
 | -------- | -------- | -------- |
-| `alertrules_dir` | `alerts` | Directory with alertrules files |
+| `alertrules_dir` | `alerts` | Directory with alerting rules files |
 | `alertrules_files` | `""` | If empty string files will be searched in the `alertrules_dir` |
+| `recordingrules_dir` | `rules` | Directory with recording rules files |
+| `recordingrules_files` | `""` | If empty string files will be searched in the `recordingrules_dir` |
 | `alertrules_tests_dir` | `tests` | Directory with tests |
 | `alertrules_tests` | `""` | If empty string files will be searched in the `alertrules_tests_dir` |
+| `scrapetargets_dir` | `tests` | Directory with scrape targets |
+| `scrapetargets_files` | `""` | If empty string files will be searched in the `scrapetargets_dir` |
 | `exclude_regex` | `^NO_EXCLUDE_FILES\$` | Regular expression to exclude files from checking and testing|
 | `verbose` | `false` | Show verbose output, including promtool results |
 
@@ -66,6 +70,10 @@ There is no difference between the DockerHub image and the oss.help/drone image.
 ### Why it fails with alerts without tests?
 
 Using alerting rules without corresponding testing is considered a very bad idea. One day you can break your alerting without even noticing it. The consequences you can imagine by yourself. So, read the [official docs on promtool](https://prometheus.io/docs/prometheus/latest/configuration/unit_testing_rules/) and add tests for your alerting rules.
+
+### Why do you create temporary prometheus.yml?
+
+There are some scenarios where testing standalone alerting and/or recording rules isn't enough. So, we decided to render temporary prometheus.yml based on the default one from official releases. All found rules and targets are injected into this prometheus.yml, then it's validated by `promtool check config prometheus.yml`. Just another layer of protection from unusual mistakes.
 
 ## Links
 
